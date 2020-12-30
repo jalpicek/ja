@@ -257,6 +257,10 @@ function calculateEverything() {
                         })
 						console.log("Zde chci pocet utoku ");
 						console.log(rows.eq(rowNr).children().not(':first').eq(12).text().trim());
+						
+						console.log("Zde chci vesku ");
+						console.log(rows.eq(rowNr).children().not(':first').eq(0).text().trim());
+						
 						villageData[thisID]["attacks"] = rows.eq(rowNr).children().not(':first').eq(12).text().trim();
                     });
 
@@ -450,8 +454,8 @@ function displayEverything() {
 		// pocet utoku
 		for (var villageCounter = 0; villageCounter < Object.keys(playerData[playerName]).length; villageCounter++) {
 			console.log(Object.keys(playerData[playerName]));
-			console.log("POCET UTOKU");
-			console.log(playerData[playerName][Object.keys(playerData[playerName])[villageCounter]]);
+			console.log("POCET UTOKU: " + playerData[playerName][Object.keys(playerData[playerName])[villageCounter]]["attacks"]);
+			console.log("VESNICE: " + );
 		}
 
         html += `
