@@ -256,7 +256,7 @@ function calculateEverything() {
                             }
                         })
 						console.log("Zde chci pocet utoku ");
-						console.log(parseInt(rows.eq(rowNr).children().not(':first').eq(12)));
+						console.log(parseInt(rows.eq(rowNr).children().not(':first').eq(12).text().trim()));
 						villageData[thisID]["attacks"] = parseInt(rows.eq(rowNr).children().not(':first').eq(12));
                     });
 
