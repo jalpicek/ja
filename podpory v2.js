@@ -228,8 +228,14 @@ function calculateEverything() {
 
                 },
                 () => {
+					console.log("Rows for player "+player[i].name);
+					if (player[i].name != 'jalp') {
+						return;
+					}
                     console.log("Rows for player "+player[i].name+ " total: "+rows.length);
                     //create empty total object
+					
+					
                     $.each(game_data.units, function (index) {
                         unitName = game_data.units[index];
                         villageData["total"][unitName] = 0;
@@ -250,6 +256,7 @@ function calculateEverything() {
                             }
                         })
 						console.log("Zde chci pocet utoku ");
+						console.log(rows.eq(rowNr).children());
 						villageData[thisID]["attacks"] = 55;
                     });
 
