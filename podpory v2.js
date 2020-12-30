@@ -234,21 +234,23 @@ function displayEverything() {
         </div> 
     </div>`;
     $.each(playerData, function (playerName) {
-        html += `
-        <div id='player${playerName}' class="sophHeader" style="float: left;width: 800px;">
-            <p style="padding:10px">${playerName}</p>
-            <div class="sophRowA" width="760px">
-			<table>`
-		// pocet utoku
+		podUtoky = ''; 
 		for (var villageCounter = 0; villageCounter < Object.keys(playerData[playerName]).length-1; villageCounter++) {
 					pocetUtoku = playerData[playerName][Object.keys(playerData[playerName])[villageCounter]]["attacks"];
 		    if (parseInt(pocetUtoku) === 0 || pocetUtoku === undefined) {
 			   continue;
 		    }
 			vesnice = playerData[playerName][Object.keys(playerData[playerName])[villageCounter]]["village"];
-			html += `<tr><td class="item-padded">` + vesnice + `</td><td class="item-padded"> ___ Počet útoků: ` + pocetUtoku + `</td></tr>`
+			podUtoky += `<tr><td class="item-padded">` + vesnice + `</td><td class="item-padded"> ___ Počet útoků: ` + pocetUtoku + `</td></tr>`
 		}
-        html += `</table></div></div>`;
+		if (podUtoky) {
+          html += `
+          <div id='player${playerName}' class="sophHeader" style="float: left;width: 800px;">
+            <p style="padding:10px">${playerName}</p>
+            <div class="sophRowA" width="760px">
+			<table>`
+          html += podUtoky + `</table></div></div>`;
+		}
     });
 
     $("#contentContainer").prepend(html);
