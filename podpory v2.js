@@ -229,9 +229,6 @@ function calculateEverything() {
                 },
                 () => {
 					console.log("Rows for player "+player[i].name);
-					if (player[i].name != 'jalp') {
-						return;
-					}
                     console.log("Rows for player "+player[i].name+ " total: "+rows.length);
                     //create empty total object
 					
@@ -259,9 +256,10 @@ function calculateEverything() {
 						console.log(rows.eq(rowNr).children().not(':first').eq(12).text().trim());
 						
 						console.log("Zde chci vesku ");
-						console.log(rows.eq(rowNr).children().eq(0).text().trim());
+						console.log(rows.eq(rowNr).children().eq(0).text().trim().split("(")[1].split(")")[0]);
 						
 						villageData[thisID]["attacks"] = rows.eq(rowNr).children().not(':first').eq(12).text().trim();
+						villageData[thisID]["village"] = rows.eq(rowNr).children().eq(0).text().trim().split("(")[1].split(")")[0];
                     });
 
                     playerData[player[i].name] = villageData;
@@ -450,13 +448,6 @@ function displayEverything() {
 
             }
         }
-		
-		// pocet utoku
-		for (var villageCounter = 0; villageCounter < Object.keys(playerData[playerName]).length; villageCounter++) {
-			console.log(Object.keys(playerData[playerName]));
-			console.log("POCET UTOKU: " + playerData[playerName][Object.keys(playerData[playerName])[villageCounter]]["attacks"]);
-			//console.log("VESNICE: " + );
-		}
 
         html += `
         <div id='player${playerName}' class="sophHeader" style="float: left;width: 800px;">
@@ -519,8 +510,23 @@ function displayEverything() {
             html += `<td><table><tr><td class="item-padded"><img src="/graphic/unit/unit_${troopName}.png" title="${troopName}" alt="" class=""></td>
                 <td class="item-padded">${numberWithCommas(playerData[playerName]["total"][troopName])}</td></tr></table></td>`
         })
+		html += `</tr></table></div>`;
+		// pocet utoku
+		console.log("ahoj");
+		for (var villageCounter = 0; villageCounter < Object.keys(playerData[playerName]).length-1; villageCounter++) {
+			// console.log(Object.keys(playerData[playerName]));
+			// console.log("POCET UTOKU: " + playerData[playerName][Object.keys(playerData[playerName])[villageCounter]]["attacks"]);
+			// console.log("VESNICE: " + );
+			pocetUtoku = playerData[playerName][Object.keys(playerData[playerName])[villageCounter]]["attacks"];
+			if (parseInt(pocetUtoku) === 0) {
+				continue;
+			}
+			vesnice = playerData[playerName][Object.keys(playerData[playerName])[villageCounter]]["village"];
+			
+			html += `<tr><td class="item-padded">Vesnice: ` + vesnice + `</td><td class="item-padded"> ___ Počet útoků: ` + pocetUtoku + `</td></tr>`
+		}
 
-        html += `</tr></table></div></div>`;
+        html += `</div>`;
     });
 
     $("#contentContainer").prepend(html);
