@@ -256,8 +256,8 @@ function calculateEverything() {
                             }
                         })
 						console.log("Zde chci pocet utoku ");
-						console.log(parseInt(rows.eq(rowNr).children().not(':first').eq(12)));
-						villageData[thisID]["attacks"] = 55;
+						console.log(rows.eq(rowNr).children().not(':first').eq(12));
+						villageData[thisID]["attacks"] = parseInt(rows.eq(rowNr).children().not(':first').eq(12));
                     });
 
                     playerData[player[i].name] = villageData;
@@ -446,6 +446,13 @@ function displayEverything() {
 
             }
         }
+		
+		// pocet utoku
+		for (var villageCounter = 0; villageCounter < Object.keys(playerData[playerName]).length; villageCounter++) {
+			console.log(Object.keys(playerData[playerName]));
+			console.log("POCET UTOKU");
+			console.log(parseInt(playerData[playerName][Object.keys(playerData[playerName])[villageCounter]]["attacks"]));
+		}
 
         html += `
         <div id='player${playerName}' class="sophHeader" style="float: left;width: 800px;">
