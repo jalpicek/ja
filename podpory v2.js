@@ -332,9 +332,7 @@ function displayEverything() {
             <p style="padding:10px">${playerName}</p>
             <div class="sophRowA" width="760px">`
 
-        html += `
-		        </div>
-                <table>`;
+        html += `<table>`;
 		// pocet utoku
 		for (var villageCounter = 0; villageCounter < Object.keys(playerData[playerName]).length-1; villageCounter++) {
 					pocetUtoku = playerData[playerName][Object.keys(playerData[playerName])[villageCounter]]["attacks"];
@@ -345,7 +343,7 @@ function displayEverything() {
 			html += `<tr><td class="item-padded">` + vesnice + `</td><td class="item-padded"> ___ Počet útoků: ` + pocetUtoku + `</td></tr>`
 		}
 
-        html += `</table></div>`;
+        html += `</table></div></div>`;
     });
 
     $("#contentContainer").prepend(html);
