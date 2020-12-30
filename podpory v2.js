@@ -297,28 +297,6 @@ function makeThingsCollapsible() {
         });
     }
 }
-function numberWithCommas(x) {
-    // add . to make numbers more readable
-    x = x.toString();
-    var pattern = /(-?\d+)(\d{3})/;
-    while (pattern.test(x))
-        x = x.replace(pattern, "$1.$2");
-    return x;
-}
-
-function saveSettings() {
-
-    tempArray = $("#settings").serializeArray();
-    fullPop = tempArray[0].value;
-    almostPop = tempArray[1].value;
-    semiPop = tempArray[2].value;
-    quarterPop = tempArray[3].value;
-    fangSize = tempArray[4].value;
-    localStorage.setItem("settingsTribeMembers", JSON.stringify(tempArray));
-    $(".flex-container").remove();
-    $("div[id*='player']").remove();
-    displayEverything();
-}
 
 function displayEverything() {
     html = `
@@ -330,19 +308,17 @@ function displayEverything() {
         html += `
         <div id='player${playerName}' class="sophHeader" style="float: left;width: 800px;">
             <p style="padding:10px">${playerName}</p>
-            <div class="sophRowA" width="760px">`
-
-        html += `<table>`;
+            <div class="sophRowA" width="760px">
+			<table>`
 		// pocet utoku
 		for (var villageCounter = 0; villageCounter < Object.keys(playerData[playerName]).length-1; villageCounter++) {
 					pocetUtoku = playerData[playerName][Object.keys(playerData[playerName])[villageCounter]]["attacks"];
-		    if (parseInt(pocetUtoku) === 0) {
+		    if (parseInt(pocetUtoku) === 0 || pocetUtoku === undefined) {
 			   continue;
 		    }
 			vesnice = playerData[playerName][Object.keys(playerData[playerName])[villageCounter]]["village"];
 			html += `<tr><td class="item-padded">` + vesnice + `</td><td class="item-padded"> ___ Počet útoků: ` + pocetUtoku + `</td></tr>`
 		}
-
         html += `</table></div></div>`;
     });
 
