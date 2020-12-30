@@ -451,7 +451,7 @@ function displayEverything() {
 		for (var villageCounter = 0; villageCounter < Object.keys(playerData[playerName]).length; villageCounter++) {
 			console.log(Object.keys(playerData[playerName]));
 			console.log("POCET UTOKU");
-			console.log(parseInt(playerData[playerName][Object.keys(playerData[playerName])[villageCounter]]));
+			console.log(playerData[playerName][Object.keys(playerData[playerName])[villageCounter]]);
 		}
 
         html += `
