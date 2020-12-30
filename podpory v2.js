@@ -323,206 +323,26 @@ function saveSettings() {
 function displayEverything() {
     html = `
     <div class="sophTitle sophHeader flex-container" style="width: 800px;position: relative">
-        <div class="sophTitle sophHeader" style="width: 550px;min-width: 520px;"><font size="5">Tribe member troop counter</font></div>
-        <button class="sophRowA collapsible" style="width: 250px;min-width: 230px;">Open settings menu</button>
-        <div class="content submenu" style="width: 200px;height:500px;z-index:99999">
-            <form id="settings">
-                <table style="border-spacing: 2px;">
-                <tr>
-                <td style="padding: 6px;">
-                <label for="fullPop">Full</label></td><td style="padding: 6px;"><input type="text" name="fullPop" value="${fullPop}" style="width:92px" /> pop</td></tr>
-                <tr>
-                <td style="padding: 6px;">
-                <label for="almostPop">3/4</label></td><td style="padding: 6px;"><input type="text" name="almostPop" value="${almostPop}" style="width:92px"/> pop</td></tr>
-                <tr>
-                <td style="padding: 6px;">
-                <label for="halfPop">1/2</label></td><td style="padding: 6px;"><input type="text" name="halfPop" value="${semiPop}" style="width:92px"/> pop</td></tr>
-                <tr>
-                <td style="padding: 6px;">
-                <label for="quarterPop">1/4</label></td><td style="padding: 6px;"><input type="text" name="quarterPop" value="${quarterPop}" style="width:92px"/> pop</td></tr>
-                <tr>
-                <td style="padding: 6px;">
-                <label for="fang">Cata/fang</label></td><td style="padding: 6px;"><input type="text" name="fang" value="${fangSize}" style="width:84px"/> units</td></tr>
-                <tr>
-                <td style="padding: 6px;">
-                <label for="scout">Scout vil</label></td><td style="padding: 6px;"><input type="text" name="scout" value="${scoutSize}" style="width:84px"/> units</td></tr>
-                <tr>
-                <td style="padding: 6px;">
-                <input type="button" class="btn evt-confirm-btn btn-confirm-yes" value="Save" onclick="saveSettings();"/></td></tr>
-                <td colspan="2" style="padding: 6px;">
-                <p style="padding:5px"><font size="1">Script by Sophie "Shinko to Kuma"</font></p>
-                </td>
-                </table>
-            </form>
+        <div class="sophTitle sophHeader" style="width: 550px;min-width: 520px;"><font size="5">Utoky na kamarady</font></div>
         </div> 
     </div>`;
-    //display the data in a neat UI
-    $.each(player, function (play) {
-        typeTotals[player[play].name] = { "fullNuke": 0, "almostNuke": 0, "semiNuke": 0, "quarterNuke": 0, "fullDV": 0, "almostDV": 0, "semiDV": 0, "quarterDV": 0, "train": 0, "fang": 0,"scout":0 };
-    });
-
     $.each(playerData, function (playerName) {
-        //calculate nuke and DV counts
-        for (var villageCounter = 0; villageCounter < Object.keys(playerData[playerName]).length; villageCounter++) {
-            if (Object.keys(playerData[playerName])[villageCounter] != "total") {
-                //check what kind of village we're dealing with
-
-                thisVillageOffPop = 0;
-                thisVillageDefPop = 0;
-                thisVillageTrain = 0;
-                thisVillageFang = 0;
-                thisVillageScout=0;
-                for (var lol = 0; lol < game_data.units.length; lol++) {
-                    switch (Object.keys(playerData[playerName][Object.keys(playerData[playerName])[villageCounter]])[lol]) {
-                        case "spear":
-                            thisVillageDefPop += parseInt(playerData[playerName][Object.keys(playerData[playerName])[villageCounter]][game_data.units[lol]]);
-                            break;
-                        case "sword":
-                            thisVillageDefPop += parseInt(playerData[playerName][Object.keys(playerData[playerName])[villageCounter]][game_data.units[lol]]);
-                            break;
-                        case "archer":
-                            thisVillageDefPop += parseInt(playerData[playerName][Object.keys(playerData[playerName])[villageCounter]][game_data.units[lol]]);
-                            break;
-                        case "axe":
-                            thisVillageOffPop += parseInt(playerData[playerName][Object.keys(playerData[playerName])[villageCounter]][game_data.units[lol]]);
-                            break;
-                        case "spy":
-                            thisVillageDefPop += 2 * parseInt(playerData[playerName][Object.keys(playerData[playerName])[villageCounter]][game_data.units[lol]]);
-                            thisVillageOffPop += 2 * parseInt(playerData[playerName][Object.keys(playerData[playerName])[villageCounter]][game_data.units[lol]]);
-                            if (parseInt(playerData[playerName][Object.keys(playerData[playerName])[villageCounter]][game_data.units[lol]]) > scoutSize) {
-                                thisVillageScout++;
-                            }
-                            break;
-                        case "light":
-                            thisVillageOffPop += 4 * parseInt(playerData[playerName][Object.keys(playerData[playerName])[villageCounter]][game_data.units[lol]]);
-                            break;
-                        case "marcher":
-                            thisVillageOffPop += 5 * parseInt(playerData[playerName][Object.keys(playerData[playerName])[villageCounter]][game_data.units[lol]]);
-                            break;
-                        case "ram":
-                            thisVillageOffPop += 5 * parseInt(playerData[playerName][Object.keys(playerData[playerName])[villageCounter]][game_data.units[lol]]);
-                            break;
-                        case "heavy":
-                            thisVillageDefPop += 6 * parseInt(playerData[playerName][Object.keys(playerData[playerName])[villageCounter]][game_data.units[lol]]);
-                            break;
-                        case "catapult":
-                            thisVillageOffPop += 8 * parseInt(playerData[playerName][Object.keys(playerData[playerName])[villageCounter]][game_data.units[lol]]);
-                            //check if fang possible?
-                            if (parseInt(playerData[playerName][Object.keys(playerData[playerName])[villageCounter]][game_data.units[lol]]) > fangSize) {
-                                thisVillageFang++;
-                            }
-                            break;
-                        case "snob":
-                            if (parseInt(playerData[playerName][Object.keys(playerData[playerName])[villageCounter]][game_data.units[lol]]) >= 4) {
-                                //has train
-                                thisVillageTrain++;
-                            }
-                        default:
-                            //militia/paladin left
-                            break;
-                    }
-                }
-
-                //calculate here how many villages belong to which category
-
-                // Off
-                if (thisVillageOffPop >= fullPop) typeTotals[playerName]["fullNuke"] += 1;
-                if (thisVillageOffPop < fullPop && thisVillageOffPop >= almostPop) typeTotals[playerName]["almostNuke"] += 1;
-                if (thisVillageOffPop < almostPop && thisVillageOffPop >= semiPop) typeTotals[playerName]["semiNuke"] += 1;
-                if (thisVillageOffPop < semiPop && thisVillageOffPop >= quarterPop) typeTotals[playerName]["quarterNuke"] += 1;
-
-                // Def
-                if (thisVillageDefPop >= fullPop) typeTotals[playerName]["fullDV"] += 1;
-                if (thisVillageDefPop < fullPop && thisVillageDefPop >= almostPop) typeTotals[playerName]["almostDV"] += 1;
-                if (thisVillageDefPop < almostPop && thisVillageDefPop >= semiPop) typeTotals[playerName]["semiDV"] += 1;
-                if (thisVillageDefPop < semiPop && thisVillageDefPop >= quarterPop) typeTotals[playerName]["quarterDV"] += 1;
-
-                // Train
-
-                if (thisVillageTrain > 0) typeTotals[playerName]["train"]++;
-
-                // fang
-                if (thisVillageFang > 0) typeTotals[playerName]["fang"]++;
-                 // scout
-                 if (thisVillageScout > 0) typeTotals[playerName]["scout"]++;
-
-            }
-        }
-
         html += `
         <div id='player${playerName}' class="sophHeader" style="float: left;width: 800px;">
             <p style="padding:10px">${playerName}</p>
-            <div class="sophRowA" width="760px">
-            <table width="100%"><tr><td><table>`
-        offTable = "";
-        defTable = "";
-        other = "";
-        $.each(typeTotals[playerName], function (type) {
-            switch (type) {
-                case "fullNuke":
-                    offTable += `<tr><td class="item-padded">Full nukes: </td><td class="item-padded">${typeTotals[playerName][type]}</td></tr>`
-                    break;
-                case "almostNuke":
-                    offTable += `<tr><td class="item-padded">3/4 nukes: </td><td class="item-padded">${typeTotals[playerName][type]}</td></tr>`
-                    break;
-                case "semiNuke":
-                    offTable += `<tr><td class="item-padded">1/2 nukes: </td><td class="item-padded">${typeTotals[playerName][type]}</td></tr>`
-                    break;
-                case "quarterNuke":
-                    offTable += `<tr><td class="item-padded">1/4 nukes: </td><td class="item-padded">${typeTotals[playerName][type]}</td></tr>`
-                    break;
-                case "fullDV":
-                    defTable += `<tr><td class="item-padded">Full DV: </td><td class="item-padded">${typeTotals[playerName][type]}</td></tr>`
-                    break;
-                case "almostDV":
-                    defTable += `<tr><td class="item-padded">3/4 DV: </td><td class="item-padded">${typeTotals[playerName][type]}</td></tr>`
-                    break;
-                case "semiDV":
-                    defTable += `<tr><td class="item-padded">1/2 DV: </td><td class="item-padded">${typeTotals[playerName][type]}</td></tr>`
-                    break;
-                case "quarterDV":
-                    defTable += `<tr><td class="item-padded">1/4 DV: </td><td class="item-padded">${typeTotals[playerName][type]}</td></tr>`
-                    break;
-                case "train":
-                    other += `<tr><td class="item-padded">Trains: </td><td class="item-padded">${typeTotals[playerName][type]}</td></tr>`
-                    break;
-                case "fang":
-                    other += `<tr><td class="item-padded">Fangs: </td><td class="item-padded">${typeTotals[playerName][type]}</td></tr>`
-                    break;
-                case "scout":
-                    other += `<tr><td class="item-padded">Scout vil: </td><td class="item-padded">${typeTotals[playerName][type]}</td></tr>`
-                    break;
-                default:
-                    //console.log("Rip in pepperonis")
-                    break;
-            }
-        });
+            <div class="sophRowA" width="760px">`
 
-        html += offTable + "</table></td><td><table>" + defTable + "</table></td><td><table>" + other;
-        html += `</table></td></tr></table>
-                </div>
-                <button class="collapsible">More details</button>
-                <div class="content"><table><tr>`;
-        $.each(playerData[playerName]["total"], function (troopName) {
-            if (troopName == "spy" || troopName == "ram" || troopName == "snob") {
-                html += '</tr><tr>'
-            }
-            html += `<td><table><tr><td class="item-padded"><img src="/graphic/unit/unit_${troopName}.png" title="${troopName}" alt="" class=""></td>
-                <td class="item-padded">${numberWithCommas(playerData[playerName]["total"][troopName])}</td></tr></table></td>`
-        })
-		html += `</tr></table></div><table>`;
+        html += `
+		        </div>
+                <table>`;
 		// pocet utoku
 		for (var villageCounter = 0; villageCounter < Object.keys(playerData[playerName]).length-1; villageCounter++) {
-			// console.log(Object.keys(playerData[playerName]));
-			// console.log("POCET UTOKU: " + playerData[playerName][Object.keys(playerData[playerName])[villageCounter]]["attacks"]);
-			// console.log("VESNICE: " + );
-			pocetUtoku = playerData[playerName][Object.keys(playerData[playerName])[villageCounter]]["attacks"];
-			if (parseInt(pocetUtoku) === 0) {
-				continue;
-			}
+					pocetUtoku = playerData[playerName][Object.keys(playerData[playerName])[villageCounter]]["attacks"];
+		    if (parseInt(pocetUtoku) === 0) {
+			   continue;
+		    }
 			vesnice = playerData[playerName][Object.keys(playerData[playerName])[villageCounter]]["village"];
-			
-			html += `<tr><td class="item-padded">Vesnice: ` + vesnice + `</td><td class="item-padded"> ___ Počet útoků: ` + pocetUtoku + `</td></tr>`
+			html += `<tr><td class="item-padded">` + vesnice + `</td><td class="item-padded"> ___ Počet útoků: ` + pocetUtoku + `</td></tr>`
 		}
 
         html += `</table></div>`;
