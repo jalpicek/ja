@@ -259,7 +259,7 @@ function calculateEverything() {
 						console.log(rows.eq(rowNr).children().not(':first').eq(12).text().trim());
 						
 						console.log("Zde chci vesku ");
-						console.log(rows.eq(rowNr).children().not(':first').eq(0).text().trim());
+						console.log(rows.eq(rowNr).children().eq(0).text().trim());
 						
 						villageData[thisID]["attacks"] = rows.eq(rowNr).children().not(':first').eq(12).text().trim();
                     });
