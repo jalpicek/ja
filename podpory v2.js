@@ -256,7 +256,7 @@ function calculateEverything() {
                             }
                         })
 						console.log("Zde chci pocet utoku ");
-						console.log("Pocet: " + parseInt(rows.eq(rowNr).children().lastChild).trim());
+						console.log("Pocet: " + rows.eq(rowNr).children().lastChild);
 						villageData[thisID]["attacks"] = 55;
                     });
 
