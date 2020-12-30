@@ -10,38 +10,9 @@ var playerURLs = [];
 var villageData = {};
 var playerData = {};
 var player = [];
-var typeTotals = {};
 //remove previous ran version of script if accidental doublelaunch
 $(".flex-container").remove();
 $("div[id*='player']").remove();
-// get/store settings
-if (localStorage.getItem("settingsTribeMembers") != null) {
-    tempArray = JSON.parse(localStorage.getItem("settingsTribeMembers"));
-    fullPop = tempArray[0].value;
-    almostPop = tempArray[1].value;
-    semiPop = tempArray[2].value;
-    quarterPop = tempArray[3].value;
-    fangSize = tempArray[4].value;
-    if(tempArray[5]!=undefined) scoutSize = tempArray[5].value;
-    else scoutSize=4000;
-}
-else {
-    tempArray = [
-        { name: "fullPop", value: "18000" },
-        { name: "almostPop", value: "15000" },
-        { name: "halfPop", value: "10000" },
-        { name: "quarterPop", value: "5000" },
-        { name: "fang", value: "200" },
-        { name: "scout", value: "4000"}
-    ]
-    fullPop = tempArray[0].value;
-    almostPop = tempArray[1].value;
-    semiPop = tempArray[2].value;
-    quarterPop = tempArray[3].value;
-    fangSize = tempArray[4].value;
-    scoutSize = tempArray[5].value;
-    localStorage.setItem("settingsTribeMembers", JSON.stringify(tempArray));
-}
 //collect all player names/ids
 $('input:radio[name=player]').each(function () {
     playerURLs.push(baseURL + $(this).attr("value"));
@@ -200,7 +171,6 @@ function calculateEverything() {
             //console.log("Grabbing page nr 0");
             
             villageData = {};
-            villageData["total"] = {};
             //grab village rows
             if ($(data).find(".paged-nav-item").length == 0) {
                 rows = $(data).find(".vis.w100 tr").not(':first');
@@ -228,43 +198,15 @@ function calculateEverything() {
 
                 },
                 () => {
-					//console.log("Rows for player "+player[i].name);
-                    //console.log("Rows for player "+player[i].name+ " total: "+rows.length);
-                    //create empty total object
-					
-					
-                    $.each(game_data.units, function (index) {
-                        unitName = game_data.units[index];
-                        villageData["total"][unitName] = 0;
-                    })
-                    //get all unit data
+                    //get atacks data
                     $.each(rows, function (rowNr) {
                         thisID = rows.eq(rowNr).find("a")[0].outerHTML.match(/id=(\d*)/)[1];
                         villageData[thisID] = [];
-                        $.each(game_data.units, function (index) {
-                            unitName = game_data.units[index];
-                            if (rows.eq(rowNr).children().not(':first').eq(index).text().trim() != '?') {
-                                villageData[thisID][unitName] = rows.eq(rowNr).children().not(':first').eq(index).text().trim();
-                                villageData["total"][unitName] += parseInt(rows.eq(rowNr).children().not(':first').eq(index).text().trim());
-                            }
-                            else {
-                                villageData[thisID][unitName] = 0;
-                                villageData["total"][unitName] += 0;
-                            }
-                        })
-						//console.log("Zde chci pocet utoku ");
-						//console.log(rows.eq(rowNr).children().not(':first').eq(12).text().trim());
-						
-						//console.log("Zde chci vesku ");
-						//console.log(rows.eq(rowNr).children().eq(0).text().trim().split("(")[1].split(")")[0]);
-						
 						villageData[thisID]["attacks"] = rows.eq(rowNr).children().not(':first').eq(12).text().trim();
 						villageData[thisID]["village"] = rows.eq(rowNr).children().eq(0).text().trim().split("(")[1].split(")")[0];
                     });
 
                     playerData[player[i].name] = villageData;
-                    // set up total nuke/DV counts at 0 to start
-                    typeTotals[player[i].name] = { "fullNuke": 0, "almostNuke": 0, "semiNuke": 0, "quarterNuke": 0, "fullDV": 0, "almostDV": 0, "semiDV": 0, "quarterDV": 0, "train": 0, "fang": 0, "scout":0};
                 },
                 (error) => {
                     console.error(error);
@@ -283,20 +225,7 @@ function calculateEverything() {
 }
 
 calculateEverything();
-function makeThingsCollapsible() {
-    var coll = $(".collapsible");
-    for (var i = 0; i < coll.length; i++) {
-        coll[i].addEventListener("click", function () {
-            this.classList.toggle("active");
-            var content = this.nextElementSibling;
-            if (content.style.maxHeight) {
-                content.style.maxHeight = null;
-            } else {
-                content.style.maxHeight = content.scrollHeight + "px";
-            }
-        });
-    }
-}
+
 
 function displayEverything() {
     html = `
@@ -323,5 +252,4 @@ function displayEverything() {
     });
 
     $("#contentContainer").prepend(html);
-    makeThingsCollapsible();
 }
