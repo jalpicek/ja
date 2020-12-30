@@ -196,8 +196,8 @@ function calculateEverything() {
     // collect all data from every player
     $.getAll(playerURLs,
         (i, data) => {
-            console.log("Grabbing player nr " + i);
-            console.log("Grabbing page nr 0");
+            //console.log("Grabbing player nr " + i);
+            //console.log("Grabbing page nr 0");
             
             villageData = {};
             villageData["total"] = {};
@@ -214,10 +214,10 @@ function calculateEverything() {
             for (var pages = 0; pages < $(data).find(".paged-nav-item").length / 2; pages++) {
                 allPages.push($(data).find(".paged-nav-item").eq(pages).attr("href"));
             }
-            console.log(allPages);
+            //console.log(allPages);
             $.getAll(allPages,
                 (p, getMore) => {
-                    console.log("Grabbing page nr " + (p+1));
+                    //console.log("Grabbing page nr " + (p+1));
                     
                     if ($(getMore).find(".paged-nav-item").length == 0) {
                         rows = $.merge(rows,$(getMore).find(".vis.w100 tr").not(':first'));
@@ -228,8 +228,8 @@ function calculateEverything() {
 
                 },
                 () => {
-					console.log("Rows for player "+player[i].name);
-                    console.log("Rows for player "+player[i].name+ " total: "+rows.length);
+					//console.log("Rows for player "+player[i].name);
+                    //console.log("Rows for player "+player[i].name+ " total: "+rows.length);
                     //create empty total object
 					
 					
@@ -252,11 +252,11 @@ function calculateEverything() {
                                 villageData["total"][unitName] += 0;
                             }
                         })
-						console.log("Zde chci pocet utoku ");
-						console.log(rows.eq(rowNr).children().not(':first').eq(12).text().trim());
+						//console.log("Zde chci pocet utoku ");
+						//console.log(rows.eq(rowNr).children().not(':first').eq(12).text().trim());
 						
-						console.log("Zde chci vesku ");
-						console.log(rows.eq(rowNr).children().eq(0).text().trim().split("(")[1].split(")")[0]);
+						//console.log("Zde chci vesku ");
+						//console.log(rows.eq(rowNr).children().eq(0).text().trim().split("(")[1].split(")")[0]);
 						
 						villageData[thisID]["attacks"] = rows.eq(rowNr).children().not(':first').eq(12).text().trim();
 						villageData[thisID]["village"] = rows.eq(rowNr).children().eq(0).text().trim().split("(")[1].split(")")[0];
@@ -493,7 +493,7 @@ function displayEverything() {
                     other += `<tr><td class="item-padded">Scout vil: </td><td class="item-padded">${typeTotals[playerName][type]}</td></tr>`
                     break;
                 default:
-                    console.log("Rip in pepperonis")
+                    //console.log("Rip in pepperonis")
                     break;
             }
         });
@@ -510,9 +510,8 @@ function displayEverything() {
             html += `<td><table><tr><td class="item-padded"><img src="/graphic/unit/unit_${troopName}.png" title="${troopName}" alt="" class=""></td>
                 <td class="item-padded">${numberWithCommas(playerData[playerName]["total"][troopName])}</td></tr></table></td>`
         })
-		html += `</tr></table></div>`;
+		html += `</tr></table></div><table>`;
 		// pocet utoku
-		console.log("ahoj");
 		for (var villageCounter = 0; villageCounter < Object.keys(playerData[playerName]).length-1; villageCounter++) {
 			// console.log(Object.keys(playerData[playerName]));
 			// console.log("POCET UTOKU: " + playerData[playerName][Object.keys(playerData[playerName])[villageCounter]]["attacks"]);
@@ -526,7 +525,7 @@ function displayEverything() {
 			html += `<tr><td class="item-padded">Vesnice: ` + vesnice + `</td><td class="item-padded"> ___ Počet útoků: ` + pocetUtoku + `</td></tr>`
 		}
 
-        html += `</div>`;
+        html += `</table></div>`;
     });
 
     $("#contentContainer").prepend(html);
