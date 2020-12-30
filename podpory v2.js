@@ -234,23 +234,6 @@ function calculateEverything() {
                         unitName = game_data.units[index];
                         villageData["total"][unitName] = 0;
                     })
-                    //get all unit data
-                    $.each(rows, function (rowNr) {
-                        thisID = rows.eq(rowNr).find("a")[0].outerHTML.match(/id=(\d*)/)[1];
-                        villageData[thisID] = [];
-                        $.each(game_data.units, function (index) {
-                            unitName = game_data.units[index];
-                            if (rows.eq(rowNr).children().not(':first').eq(index).text().trim() != '?') {
-                                villageData[thisID][unitName] = rows.eq(rowNr).children().not(':first').eq(index).text().trim();
-                                villageData["total"][unitName] += parseInt(rows.eq(rowNr).children().not(':first').eq(index).text().trim());
-                            }
-                            else {
-                                villageData[thisID][unitName] = 0;
-                                villageData["total"][unitName] += 0;
-                            }
-                        })
-                    });
-
                     playerData[player[i].name] = villageData;
                     // set up total nuke/DV counts at 0 to start
                     typeTotals[player[i].name] = { "fullNuke": 0, "almostNuke": 0, "semiNuke": 0, "quarterNuke": 0, "fullDV": 0, "almostDV": 0, "semiDV": 0, "quarterDV": 0, "train": 0, "fang": 0, "scout":0};
