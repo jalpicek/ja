@@ -136,7 +136,7 @@ var langShinko = {
         "Manually": "Manually", // Manual refund received
         "Withdrawn": "Withdrawn" // refund received
     },
-	"cs_CS": {
+	"cs_CZ": {
         "Purchase": "Koupě",
         "Premium Exchange": "Prémiový trh",
         "Points redeemed": "Nasazen",
@@ -148,7 +148,7 @@ var langShinko = {
         "Endgame reward": "Endgame reward", //world reward
         "Manually": "Manually", // Manual refund received
         "Withdrawn": "Withdrawn" // refund received
-	},
+	}
 
 }
 var worldDataBase = {};
@@ -249,7 +249,8 @@ $.getAll(URLs,
         tempRows = $(data).find("table .vis> tbody > tr");
         var thisPageAmount = 0;
         for (var j = 0; j < tempRows.length - 2; j++) {
-
+			console.log("aaa" + tempRows[j + 2].children[2].innerText);
+			console.log(game_data.locale);
             // buying
             if (tempRows[j + 2].children[2].innerText.indexOf(langShinko[game_data.locale]["Purchase"]) > -1) {
                 //console.log("Found a purchase!");
