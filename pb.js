@@ -245,15 +245,15 @@ $.getAll = function (
 
 $.getAll(URLs,
     (i, data) => {
-        console.log("Grabbing page " + i);
+        //console.log("Grabbing page " + i);
         tempRows = $(data).find("table .vis> tbody > tr");
         var thisPageAmount = 0;
         for (var j = 0; j < tempRows.length - 2; j++) {
-			console.log("aaa" + tempRows[j + 2].children[2].innerText);
-			console.log(game_data.locale);
+			//console.log("aaa" + tempRows[j + 2].children[2].innerText);
+			//console.log(game_data.locale);
             // buying
             if (tempRows[j + 2].children[2].innerText.indexOf(langShinko[game_data.locale]["Purchase"]) > -1) {
-                //console.log("Found a purchase!");
+                console.log("Found a purchase!");
                 if (typeof worldDataBase[tempRows[j + 2].children[1].innerText] == "undefined") {
                     worldDataBase[tempRows[j + 2].children[1].innerText] = { "Purchases": 0, "Spending": 0, "Farming": 0 };
                 }
