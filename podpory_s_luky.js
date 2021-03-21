@@ -202,7 +202,7 @@ function calculateEverything() {
                     $.each(rows, function (rowNr) {
                         thisID = rows.eq(rowNr).find("a")[0].outerHTML.match(/id=(\d*)/)[1];
                         villageData[thisID] = [];
-						villageData[thisID]["attacks"] = rows.eq(rowNr).children().not(':first').eq(14).text().trim();
+						villageData[thisID]["attacks"] = rows.eq(rowNr).children().not(':first').eq(13).text().trim();
 						villageData[thisID]["village"] = rows.eq(rowNr).children().eq(0).text().trim().split("(")[1].split(")")[0];
                     });
 
