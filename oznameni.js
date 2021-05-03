@@ -11,8 +11,8 @@ text+="\n[spoiler=Přežilo][unit]spear[/unit] "+prezilo[1]+"\n[unit]sword[/unit
 } else {
   var stupen=0;
   // fuckthisshit
-  if ($("table#attack_info_def_units")[0].rows[1].getElementsByClassName("unit-item unit-item-axe hidden")[0].innerHTML > 500 
-       || $("table#attack_info_def_units")[0].rows[1].getElementsByClassName("unit-item unit-item-light hidden")[0].innerHTML > 500) {
+  if ($("table#attack_info_def_units")[0].rows[1].getElementsByClassName("unit-item unit-item-axe")[0].innerHTML > 500 
+       || $("table#attack_info_def_units")[0].rows[1].getElementsByClassName("unit-item unit-item-light")[0].innerHTML > 500) {
 	text += "OFF ";  
   } else if ($("table#attack_info_def_units")[0].rows[1].getElementsByClassName("unit-item unit-item-spear")[0].innerHTML > 500 
        || $("table#attack_info_def_units")[0].rows[1].getElementsByClassName("unit-item unit-item-sword")[0].innerHTML > 500) {
