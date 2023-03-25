@@ -33,11 +33,11 @@ for (let i = 1; i < table.rows.length; i++) {
 }
 for (const key in resultMap) {
   const myDiv = document.createElement("div");
-  myDiv.innerHTML = key;
+  myDiv.innerHTML = "---- " + key;
   $("#incomings_table").before(myDiv)
   for (const key2 in resultMap[key]) {
     const myDiv = document.createElement("div");
-    myDiv.innerHTML = "key2 + " - " + resultMap[key][key2];
+    myDiv.innerHTML = key2 + " - " + resultMap[key][key2];
     $("#incomings_table").before(myDiv)
   }
 }
